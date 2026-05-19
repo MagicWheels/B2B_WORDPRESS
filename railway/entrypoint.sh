@@ -30,6 +30,32 @@ a2enmod mpm_prefork rewrite >/dev/null 2>&1 || true
 echo "ServerName 0.0.0.0" >/etc/apache2/conf-available/magic-wheels-servername.conf
 a2enconf magic-wheels-servername >/dev/null 2>&1 || true
 
+db_ready() {
+    php <<'PHP'
+<?php
+$host = getenv('WORDPRESS_DB_HOST') ?: 'mysql';
+$user = getenv('WORDPRESS_DB_USER') ?: 'example username';
+$password = getenv('WORDPRESS_DB_PASSWORD') ?: 'example password';
+$database = getenv('WORDPRESS_DB_NAME') ?: 'wordpress';
+$port = null;
+
+if (preg_match('/^([^:]+):([0-9]+)$/', $host, $matches)) {
+    $host = $matches[1];
+    $port = (int) $matches[2];
+}
+
+$mysqli = mysqli_init();
+$connected = @$mysqli->real_connect($host, $user, $password, $database, $port ?: null);
+
+if (!$connected) {
+    fwrite(STDERR, mysqli_connect_error() . PHP_EOL);
+    exit(1);
+}
+
+$mysqli->close();
+PHP
+}
+
 railway_config_extra="$(cat <<'PHP'
 define('FS_METHOD', 'direct');
 if (getenv('RAILWAY_PUBLIC_DOMAIN')) {
@@ -55,13 +81,13 @@ shutdown() {
 trap shutdown INT TERM
 
 for _ in $(seq 1 90); do
-    if [ -f /var/www/html/wp-config.php ] && wp db check --allow-root --path=/var/www/html >/dev/null 2>&1; then
+    if [ -f /var/www/html/wp-config.php ] && db_ready >/dev/null 2>&1; then
         break
     fi
     sleep 2
 done
 
-if ! wp db check --allow-root --path=/var/www/html >/dev/null 2>&1; then
+if ! db_ready; then
     echo "WordPress database is not reachable after waiting." >&2
     shutdown
     exit 1

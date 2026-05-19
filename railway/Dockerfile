@@ -7,6 +7,7 @@ COPY wp-content/themes/magic-wheels /var/www/html/wp-content/themes/magic-wheels
 COPY wp-content/mu-plugins /var/www/html/wp-content/mu-plugins
 COPY data /var/www/html/data
 COPY tools /var/www/html/tools
+COPY railway/health.html /var/www/html/health.html
 COPY railway/entrypoint.sh /usr/local/bin/magic-wheels-railway-entrypoint
 
 RUN chmod +x /usr/local/bin/magic-wheels-railway-entrypoint \
