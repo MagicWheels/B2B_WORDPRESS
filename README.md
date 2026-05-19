@@ -13,6 +13,15 @@ This folder contains the WordPress implementation workspace for the MAGIC WHEELS
 - Railway is used only as a temporary preview/staging environment. `railway.json` points Railway to `railway/Dockerfile`; the Railway entrypoint installs WordPress on first boot, activates the theme, creates base pages, and imports the first product set.
 - Cloudflare is reserved for DNS, SSL, CDN, and cache after production hosting is chosen.
 
+## Railway Preview
+
+- Site: `https://wordpress-production-fd52.up.railway.app`
+- Admin: `https://wordpress-production-fd52.up.railway.app/wp-admin/`
+- Admin username: `magicwheels_admin`
+- Admin email: `chloe@shmagicwheels.com`
+
+Do not commit the Railway admin password or database secrets. They are stored as Railway service variables.
+
 ## Local Run
 
 Start Docker Desktop first, then run:
