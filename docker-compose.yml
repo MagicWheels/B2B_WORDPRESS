@@ -1,0 +1,57 @@
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: magicwheels
+      MYSQL_USER: magicwheels
+      MYSQL_PASSWORD: magicwheels_local_password
+      MYSQL_ROOT_PASSWORD: magicwheels_root_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php8.3-apache
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: magicwheels
+      WORDPRESS_DB_PASSWORD: magicwheels_local_password
+      WORDPRESS_DB_NAME: magicwheels
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content/themes/magic-wheels:/var/www/html/wp-content/themes/magic-wheels
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - uploads:/var/www/html/wp-content/uploads
+
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      - db
+      - wordpress
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: magicwheels
+      WORDPRESS_DB_PASSWORD: magicwheels_local_password
+      WORDPRESS_DB_NAME: magicwheels
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content/themes/magic-wheels:/var/www/html/wp-content/themes/magic-wheels
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./tools:/var/www/html/tools
+      - ./data:/var/www/html/data
+      - uploads:/var/www/html/wp-content/uploads
+    profiles:
+      - tools
+
+volumes:
+  wordpress_data:
+  db_data:
+  uploads:
