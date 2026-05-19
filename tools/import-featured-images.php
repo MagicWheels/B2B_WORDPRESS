@@ -21,6 +21,15 @@ foreach ($items as $slug => $filename) {
         continue;
     }
 
+    $existing_thumbnail = get_post_thumbnail_id($post->ID);
+    if ($existing_thumbnail) {
+        $existing_file = get_attached_file($existing_thumbnail);
+        if ($existing_file && file_exists($existing_file)) {
+            WP_CLI::success('Featured image already exists for ' . $slug);
+            continue;
+        }
+    }
+
     $source = ABSPATH . 'data/media/' . $filename;
     if (!file_exists($source)) {
         WP_CLI::warning('Image missing: ' . $filename);

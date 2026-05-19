@@ -10,7 +10,7 @@ This folder contains the WordPress implementation workspace for the MAGIC WHEELS
 - Local WordPress runs through Docker Compose.
 - Core content types live in `wp-content/mu-plugins/magic-wheels-core.php`.
 - The custom visual theme lives in `wp-content/themes/magic-wheels`.
-- Railway is used only as a temporary preview/staging environment.
+- Railway is used only as a temporary preview/staging environment. `railway.json` points Railway to `railway/Dockerfile`; the Railway entrypoint installs WordPress on first boot, activates the theme, creates base pages, and imports the first product set.
 - Cloudflare is reserved for DNS, SSL, CDN, and cache after production hosting is chosen.
 
 ## Local Run
