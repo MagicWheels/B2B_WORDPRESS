@@ -25,6 +25,11 @@ if [ -z "$site_url" ]; then
     site_url="http://localhost:${PORT:-80}"
 fi
 
+a2dismod mpm_event mpm_worker >/dev/null 2>&1 || true
+a2enmod mpm_prefork rewrite >/dev/null 2>&1 || true
+echo "ServerName 0.0.0.0" >/etc/apache2/conf-available/magic-wheels-servername.conf
+a2enconf magic-wheels-servername >/dev/null 2>&1 || true
+
 railway_config_extra="$(cat <<'PHP'
 define('FS_METHOD', 'direct');
 if (getenv('RAILWAY_PUBLIC_DOMAIN')) {
