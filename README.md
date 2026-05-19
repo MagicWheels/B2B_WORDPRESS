@@ -1,5 +1,8 @@
 # MAGIC WHEELS WordPress Build
 
+Repository: `MagicWheels/B2B_WORDPRESS`  
+Project note: B2B website build for MAGIC WHEELS.
+
 This folder contains the WordPress implementation workspace for the MAGIC WHEELS B2B site.
 
 ## Current Approach
