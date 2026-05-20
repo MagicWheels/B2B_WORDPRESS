@@ -20,6 +20,17 @@ add_action('save_post_' . MW_PRODUCT_POST_TYPE, 'mw_save_product_meta');
 add_shortcode('magic_wheels_rfq', 'mw_render_rfq_form');
 add_action('admin_post_nopriv_magic_wheels_rfq', 'mw_handle_rfq_form');
 add_action('admin_post_magic_wheels_rfq', 'mw_handle_rfq_form');
+add_action('template_redirect', 'mw_redirect_common_admin_aliases');
+
+function mw_redirect_common_admin_aliases(): void
+{
+    $path = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+
+    if (in_array($path, ['admin', 'backend', 'login'], true)) {
+        wp_safe_redirect(admin_url());
+        exit;
+    }
+}
 
 function mw_register_content_model(): void
 {
