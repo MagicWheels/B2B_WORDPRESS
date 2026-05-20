@@ -9,8 +9,8 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 
 $items = [
     'mwke082-3-wheel-scooter' => 'mwke082.png',
-    'mwtp001-top-tnt-scooter' => 'mwtp001.png',
-    'mwke005-12v-bubble-scooter' => 'mwke005.jpg',
+    'mwtp001-top-tnt-scooter' => 'mwtp001.jpg',
+    'mwke005-12v-bubble-scooter' => 'mwke005.png',
     'mwke06-inline-scooter' => 'mwke06.png',
 ];
 
@@ -21,18 +21,33 @@ foreach ($items as $slug => $filename) {
         continue;
     }
 
-    $existing_thumbnail = get_post_thumbnail_id($post->ID);
-    if ($existing_thumbnail) {
-        $existing_file = get_attached_file($existing_thumbnail);
-        if ($existing_file && file_exists($existing_file)) {
-            WP_CLI::success('Featured image already exists for ' . $slug);
-            continue;
-        }
-    }
-
     $source = ABSPATH . 'data/media/' . $filename;
     if (!file_exists($source)) {
         WP_CLI::warning('Image missing: ' . $filename);
+        continue;
+    }
+
+    $source_hash = sha1_file($source);
+    $existing_attachments = get_posts([
+        'post_type' => 'attachment',
+        'post_status' => 'inherit',
+        'posts_per_page' => 1,
+        'fields' => 'ids',
+        'meta_query' => [
+            [
+                'key' => '_mw_source_image_filename',
+                'value' => $filename,
+            ],
+            [
+                'key' => '_mw_source_image_hash',
+                'value' => $source_hash,
+            ],
+        ],
+    ]);
+
+    if ($existing_attachments) {
+        set_post_thumbnail($post->ID, (int) $existing_attachments[0]);
+        WP_CLI::success('Featured image already current for ' . $slug);
         continue;
     }
 
@@ -53,5 +68,7 @@ foreach ($items as $slug => $filename) {
     }
 
     set_post_thumbnail($post->ID, $attachment_id);
+    update_post_meta($attachment_id, '_mw_source_image_filename', $filename);
+    update_post_meta($attachment_id, '_mw_source_image_hash', $source_hash);
     WP_CLI::success('Featured image set for ' . $slug);
 }

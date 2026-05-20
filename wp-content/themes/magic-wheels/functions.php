@@ -23,8 +23,8 @@ function mw_theme_setup(): void
         'footer' => 'Footer Navigation',
     ]);
 
-    add_image_size('mw-card', 720, 540, true);
-    add_image_size('mw-hero', 1680, 980, true);
+    add_image_size('mw-card', 720, 540, false);
+    add_image_size('mw-hero', 1680, 980, false);
 }
 
 function mw_theme_assets(): void
