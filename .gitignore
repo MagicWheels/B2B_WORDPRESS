@@ -1,7 +1,26 @@
 .env
+.env.*
+!.env.example
 wp-content/uploads/
 *.log
 node_modules/
 vendor/
 .DS_Store
 Thumbs.db
+
+# Local automation/runtime state
+.omx/
+
+# Secrets and local auth material
+*.pem
+*.p12
+id_rsa
+id_rsa.*
+
+# Dependency/build caches
+.venv/
+__pycache__/
+.cache/
+dist/
+build/
+coverage/

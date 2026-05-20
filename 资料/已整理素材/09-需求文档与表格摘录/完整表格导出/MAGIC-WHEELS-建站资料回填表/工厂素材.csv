@@ -1,0 +1,6 @@
+﻿Excel行号,列1,列2,列3,列4,列5,列6,列7,列8
+1,素材类型,文件名/链接,是否首期使用,是否可公开,是否需要打码,建议页面/模块,说明/拍摄内容,备注
+2,工厂外观,factory-exterior.jpg,yes,yes,yes,Factory / About,厂区外观或入口,门牌/车牌可打码
+3,生产线全景,production-line.jpg,yes,yes,yes,Factory,产线整体视角,遮盖客户名/订单号
+4,QC现场,qc-check.jpg,yes,yes,yes,Quality,检验台/抽检动作,检验记录需打码
+5,包装/PDQ,packaging-pdq.jpg,yes,yes,yes,Factory / Solutions,彩盒、贴标、PDQ装配,客户品牌需打码

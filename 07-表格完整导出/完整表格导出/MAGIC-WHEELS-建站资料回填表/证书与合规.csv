@@ -1,0 +1,5 @@
+﻿Excel行号,列1,列2,列3,列4,列5,列6,列7,列8,列9
+1,证书/报告名称,类型,适用产品/系列,适用市场,展示方式,文件名/链接,是否真实持有,到期日/年份,备注
+2,EN71 Test Report,产品测试报告,3-Wheel / Kids Scooter,EU,打码展示,EN71-report.pdf,yes,待补,隐藏编号/客户信息
+3,ASTM F963 Test Report,产品测试报告,Kids Scooter,US,打码展示,ASTM-report.pdf,yes,待补,
+4,BSCI,工厂验厂证书,Factory,Global,只列LOGO,BSCI-logo.png,yes,待补,不公开完整文件

@@ -1,0 +1,21 @@
+﻿Excel行号,列1,列2,列3,列4,列5,列6,列7,列8,列9
+1,证书/报告名称,类型,适用产品/系列,适用市场,展示方式,文件名/链接,是否真实持有,到期日/年份,备注
+2,EN71 Test Report,"产品测试报告
+TNT",3-Wheel / Kids Scooter,EU,打码展示,,yes,待补，可以不显示到期时间吧？,隐藏编号/客户信息
+3,"ASTM F963 &ASTM F2264
+Test Report","产品测试报告
+TNT",Kids Scooter,US,打码展示,,yes,待补，可以不显示到期时间吧？,"隐藏编号/客户信息
+
+ASTM F963 分散在各个页中，不集中，如何截图？"
+4,ASTM F2264 Test Report,"产品测试报告
+INLINE",Kids Scooter,US,打码展示,,yes,待补，可以不显示到期时间吧？,隐藏编号/客户信息
+5,EN71 Test Report,"产品测试报告
+泡泡车",Kids Scooter,EU/US,打码展示,,yes,待补，可以不显示到期时间吧？,隐藏编号/客户信息
+6,BSCI,工厂验厂证书,Factory,Global,只列LOGO,,yes,待补，可以不显示到期时间吧？,"不公开完整文件
+需自行抠图"
+7,FAMA,工厂验厂证书,Factory,Global,只列LOGO,,yes,待补，可以不显示到期时间吧？,"不公开完整文件
+需自行抠图"
+8,SCAN,工厂验厂证书,Factory,Global,只列LOGO,,yes,待补，可以不显示到期时间吧？,"不公开完整文件
+需自行抠图"
+9,FCCA,工厂验厂证书,Factory,Global,只列LOGO,,yes,待补，可以不显示到期时间吧？,"不公开完整文件
+需自行抠图"
