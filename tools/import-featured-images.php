@@ -8,10 +8,10 @@ require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
 $items = [
-    'mwke082-3-wheel-scooter' => 'mwke082.png',
-    'mwtp001-top-tnt-scooter' => 'mwtp001.jpg',
-    'mwke005-12v-bubble-scooter' => 'mwke005.png',
-    'mwke06-inline-scooter' => 'mwke06.png',
+    'mwke082-3-wheel-scooter' => 'mwke082.webp',
+    'mwtp001-top-tnt-scooter' => 'mwtp001.webp',
+    'mwke005-12v-bubble-scooter' => 'mwke005.webp',
+    'mwke06-inline-scooter' => 'mwke06.webp',
 ];
 
 foreach ($items as $slug => $filename) {
