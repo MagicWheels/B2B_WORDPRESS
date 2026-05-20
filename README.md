@@ -3,7 +3,7 @@
 Repository: `MagicWheels/B2B_WORDPRESS`  
 Project note: B2B website build for MAGIC WHEELS.
 
-This folder contains the WordPress implementation workspace for the MAGIC WHEELS B2B site.
+This repository contains the deployable WordPress implementation workspace plus the full project material folders for the MAGIC WHEELS B2B site.
 
 ## Current Approach
 
@@ -12,6 +12,46 @@ This folder contains the WordPress implementation workspace for the MAGIC WHEELS
 - The custom visual theme lives in `wp-content/themes/magic-wheels`.
 - Railway is used only as a temporary preview/staging environment. `railway.json` points Railway to `railway/Dockerfile`; the Railway entrypoint installs WordPress on first boot, activates the theme, creates base pages, and imports the first product set.
 - Cloudflare is reserved for DNS, SSL, CDN, and cache after production hosting is chosen.
+
+## Project Materials
+
+The WordPress build remains at the repository root so Railway can keep deploying it. The broader project materials are stored as sibling folders:
+
+- `01-需求与PRD`
+- `02-产品资料`
+- `03-工厂与合规`
+- `04-网站UI`
+- `05-上线配置`
+- `06-企业微信待下载`
+- `07-表格完整导出`
+- `08-项目管理`
+- `设计稿`
+- `资料`
+- `需求整理`
+- `项目管理`
+
+Large product, design, office, and media source files are stored with Git LFS.
+
+## Clone On A New Machine
+
+Install Git LFS first, then enable long Windows paths before cloning because some source material paths are deeply nested.
+
+```powershell
+git lfs install
+git config --global core.longpaths true
+git -c core.longpaths=true clone https://github.com/MagicWheels/B2B_WORDPRESS.git
+cd B2B_WORDPRESS
+git lfs pull
+```
+
+For a fast code-only checkout before downloading the large assets:
+
+```powershell
+$env:GIT_LFS_SKIP_SMUDGE='1'
+git -c core.longpaths=true clone https://github.com/MagicWheels/B2B_WORDPRESS.git
+cd B2B_WORDPRESS
+git lfs pull
+```
 
 ## Railway Preview
 
