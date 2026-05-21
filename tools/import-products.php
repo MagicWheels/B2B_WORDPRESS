@@ -18,6 +18,13 @@ if (!is_array($products)) {
 foreach ($products as $product) {
     $slug = sanitize_title($product['slug'] ?? $product['title']);
     $existing = get_page_by_path($slug, OBJECT, MW_PRODUCT_POST_TYPE);
+    $searchable_content = implode("\n\n", array_filter([
+        $product['content'] ?? '',
+        'Model No.: ' . ($product['model_no'] ?? ''),
+        'Category: ' . ($product['category'] ?? ''),
+        'Key Features: ' . ($product['key_features'] ?? ''),
+        'Compliance: ' . ($product['compliance'] ?? ''),
+    ]));
 
     $post_data = [
         'post_type' => MW_PRODUCT_POST_TYPE,
@@ -25,7 +32,7 @@ foreach ($products as $product) {
         'post_title' => sanitize_text_field($product['title']),
         'post_name' => $slug,
         'post_excerpt' => sanitize_text_field($product['excerpt'] ?? ''),
-        'post_content' => wp_kses_post($product['content'] ?? ''),
+        'post_content' => wp_kses_post($searchable_content),
     ];
 
     if ($existing) {

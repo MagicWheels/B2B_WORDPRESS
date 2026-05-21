@@ -190,7 +190,7 @@ function mw_render_rfq_form(): string
 {
     $message = '';
     if (isset($_GET['rfq']) && $_GET['rfq'] === 'sent') {
-        $message = '<div class="mw-form-status">Thank you. We have received your request. We will get back to you shortly.</div>';
+        $message = '<div class="mw-form-status">Thank you. We have received your request. We\'ll get back to you shortly.</div>';
     }
 
     $action = esc_url(admin_url('admin-post.php'));
@@ -198,28 +198,102 @@ function mw_render_rfq_form(): string
     ob_start();
     ?>
     <?php echo $message; ?>
-    <form class="mw-rfq-form" method="post" action="<?php echo $action; ?>">
+    <form class="mw-rfq-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
         <input type="hidden" name="action" value="magic_wheels_rfq">
         <?php wp_nonce_field('magic_wheels_rfq', 'magic_wheels_rfq_nonce'); ?>
         <label>
-            <span>Name</span>
-            <input name="name" type="text" required>
+            <span>Name *</span>
+            <input name="name" type="text" placeholder="Your full name" required>
         </label>
         <label>
-            <span>Company</span>
-            <input name="company" type="text" required>
+            <span>Email *</span>
+            <input name="email" type="email" placeholder="name@company.com" required>
         </label>
         <label>
-            <span>Email</span>
-            <input name="email" type="email" required>
+            <span>WhatsApp / Phone *</span>
+            <input name="phone" type="text" placeholder="Include country code if available" required>
         </label>
         <label>
-            <span>Target Market</span>
-            <input name="market" type="text">
+            <span>Country (Buyer Location) *</span>
+            <input name="country" type="text" placeholder="United States, Germany, UAE..." required>
         </label>
         <label>
-            <span>Models / Project Brief</span>
-            <textarea name="message" rows="5" required></textarea>
+            <span>Target Market *</span>
+            <input name="target_market" type="text" placeholder="Where the products will be sold" required>
+        </label>
+        <label>
+            <span>Company Type *</span>
+            <select name="company_type" required>
+                <option value="">Select company type</option>
+                <option>Importer / Distributor</option>
+                <option>Retail Chain</option>
+                <option>Brand / ODM Buyer</option>
+                <option>Wholesaler</option>
+                <option>Other</option>
+            </select>
+        </label>
+        <label>
+            <span>Product Type *</span>
+            <select name="product_type" required>
+                <option value="">Select product category</option>
+                <option>3-Wheel Toddler Scooters</option>
+                <option>2-Wheel Kids Scooters</option>
+                <option>Light-up Series</option>
+                <option>Electric Scooters</option>
+                <option>Not sure yet</option>
+            </select>
+        </label>
+        <label>
+            <span>Annual Volume</span>
+            <input name="annual_volume" type="text" placeholder="e.g. 10,000 / 50,000 pcs per year">
+        </label>
+        <label>
+            <span>Target MOQ (pcs) *</span>
+            <input name="quantity" type="text" placeholder="e.g. 500, 1000, 5000+" required>
+        </label>
+        <label>
+            <span>Target Price Range (FOB)</span>
+            <select name="price_range">
+                <option value="">Select target FOB price band</option>
+                <option>Under $20</option>
+                <option>$20 - $35</option>
+                <option>$35 - $60</option>
+                <option>$60 - $100</option>
+                <option>Over $100</option>
+                <option>Open / advise based on spec</option>
+            </select>
+        </label>
+        <label>
+            <span>Required Compliance</span>
+            <input name="compliance" type="text" placeholder="EN71, ASTM, CPSIA, CE...">
+        </label>
+        <label>
+            <span>Timeline</span>
+            <input name="timeline" type="text" placeholder="Sampling date, launch season, shipment target">
+        </label>
+        <label>
+            <span>Customization Needs</span>
+            <select name="customization">
+                <option value="">Select customization needs</option>
+                <option>Logo / graphics</option>
+                <option>Color / material</option>
+                <option>Packaging / PDQ</option>
+                <option>New mold / ODM development</option>
+                <option>No customization yet</option>
+            </select>
+        </label>
+        <label class="mw-field-wide">
+            <span>Message / Additional Requirements</span>
+            <textarea name="message" rows="5" placeholder="Please tell us more about your project, target market, special requirements, etc."></textarea>
+        </label>
+        <label class="mw-file-field">
+            <span>File Upload (Optional)</span>
+            <span class="mw-file-control">
+                <input name="brief_file" type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" data-file-input>
+                <span class="mw-file-button">Choose File</span>
+                <span class="mw-file-name" data-file-name>No file selected</span>
+            </span>
+            <small>Supports PDF, JPG, PNG, DOC, XLS. Max size follows server settings.</small>
         </label>
         <button type="submit">Request a Quote</button>
     </form>
@@ -235,23 +309,50 @@ function mw_handle_rfq_form(): void
     }
 
     $name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
-    $company = sanitize_text_field(wp_unslash($_POST['company'] ?? ''));
     $email = sanitize_email(wp_unslash($_POST['email'] ?? ''));
-    $market = sanitize_text_field(wp_unslash($_POST['market'] ?? ''));
+    $phone = sanitize_text_field(wp_unslash($_POST['phone'] ?? ''));
+    $country = sanitize_text_field(wp_unslash($_POST['country'] ?? ''));
+    $target_market = sanitize_text_field(wp_unslash($_POST['target_market'] ?? ''));
+    $company_type = sanitize_text_field(wp_unslash($_POST['company_type'] ?? ''));
+    $product_type = sanitize_text_field(wp_unslash($_POST['product_type'] ?? ''));
+    $annual_volume = sanitize_text_field(wp_unslash($_POST['annual_volume'] ?? ''));
+    $quantity = sanitize_text_field(wp_unslash($_POST['quantity'] ?? ''));
+    $price_range = sanitize_text_field(wp_unslash($_POST['price_range'] ?? ''));
+    $compliance = sanitize_text_field(wp_unslash($_POST['compliance'] ?? ''));
+    $timeline = sanitize_text_field(wp_unslash($_POST['timeline'] ?? ''));
+    $customization = sanitize_text_field(wp_unslash($_POST['customization'] ?? ''));
     $message = sanitize_textarea_field(wp_unslash($_POST['message'] ?? ''));
 
+    $attachments = [];
+    if (!empty($_FILES['brief_file']['name'])) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        $uploaded = wp_handle_upload($_FILES['brief_file'], ['test_form' => false]);
+        if (isset($uploaded['file'])) {
+            $attachments[] = $uploaded['file'];
+        }
+    }
+
     $recipient = get_option('admin_email', 'chloe@shmagicwheels.com');
-    $subject = 'MAGIC WHEELS RFQ - ' . ($company ?: $name);
+    $subject = 'MAGIC WHEELS RFQ - ' . $name;
     $body = implode("\n\n", [
         'Name: ' . $name,
-        'Company: ' . $company,
         'Email: ' . $email,
-        'Target Market: ' . $market,
+        'Phone / WhatsApp: ' . $phone,
+        'Country (Buyer Location): ' . $country,
+        'Target Market: ' . $target_market,
+        'Buyer Type: ' . $company_type,
+        'Product Category: ' . $product_type,
+        'Annual Volume: ' . $annual_volume,
+        'Target MOQ: ' . $quantity,
+        'Target Price Range (FOB): ' . $price_range,
+        'Required Compliance: ' . $compliance,
+        'Timeline: ' . $timeline,
+        'Customization Needs: ' . $customization,
         'Message:',
         $message,
     ]);
 
-    wp_mail($recipient, $subject, $body, ['Reply-To: ' . $email]);
+    wp_mail($recipient, $subject, $body, ['Reply-To: ' . $email], $attachments);
 
     $redirect = wp_get_referer() ?: home_url('/contact/');
     wp_safe_redirect(add_query_arg('rfq', 'sent', $redirect));

@@ -45,7 +45,7 @@ foreach ($items as $slug => $filename) {
         ],
     ]);
 
-    if ($existing_attachments) {
+    if ($existing_attachments && file_exists((string) get_attached_file((int) $existing_attachments[0]))) {
         set_post_thumbnail($post->ID, (int) $existing_attachments[0]);
         WP_CLI::success('Featured image already current for ' . $slug);
         continue;

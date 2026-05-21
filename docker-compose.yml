@@ -29,6 +29,7 @@ services:
       - wordpress_data:/var/www/html
       - ./wp-content/themes/magic-wheels:/var/www/html/wp-content/themes/magic-wheels
       - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./data:/var/www/html/data:ro
       - uploads:/var/www/html/wp-content/uploads
 
   wpcli:

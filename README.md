@@ -83,7 +83,15 @@ If WordPress asks for installation details, use:
 - Username: `magicwheels_admin`
   The setup helper prints the generated local admin password after install.
 
-Or run the setup helper:
+Or run the setup helper.
+
+macOS/Linux:
+
+```bash
+./tools/install-local.sh
+```
+
+Windows PowerShell:
 
 ```powershell
 .\tools\install-local.ps1
