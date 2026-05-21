@@ -316,19 +316,21 @@ textarea {
 .mw-mobile-toggle {
   display: none;
   justify-self: end;
-  width: 46px;
+  width: 42px;
   height: 42px;
   place-items: center;
-  gap: 5px;
+  gap: 4px;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--mw-radius);
-  background: transparent;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .mw-mobile-toggle span {
   display: block;
-  width: 22px;
+  width: 18px;
   height: 2px;
+  border-radius: 999px;
   background: #fff;
 }
 
@@ -2703,6 +2705,43 @@ textarea {
 
   .mw-mobile-toggle {
     display: inline-grid;
+  }
+
+  .mw-search-overlay {
+    padding: 92px 12px 20px;
+  }
+
+  .mw-search-overlay__panel {
+    width: min(100%, 342px);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .mw-search-overlay__close {
+    top: -50px;
+    right: 2px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mw-search-overlay__form {
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .mw-search-overlay__form input {
+    min-height: 42px;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .mw-search-overlay__submit {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 42px;
+    padding: 0 14px;
   }
 
   .mw-nav {
