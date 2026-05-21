@@ -2936,6 +2936,23 @@ textarea {
     grid-template-columns: 1fr;
   }
 
+  .mw-story-grid > *,
+  .mw-case-card,
+  .mw-resource-card,
+  .mw-case-card__body,
+  .mw-resource-card a {
+    min-width: 0;
+  }
+
+  .mw-case-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .mw-case-card dt {
+    font-size: 20px;
+    white-space: normal;
+  }
+
   .mw-case-tile,
   .mw-mini-table div,
   .mw-page-cta {
